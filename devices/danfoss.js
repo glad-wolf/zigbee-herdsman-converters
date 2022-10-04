@@ -49,6 +49,10 @@ module.exports = [
                 .withDescription('Values observed are `0` (manual), `1` (schedule) or `2` (externally)'),
             exposes.climate().withSetpoint('occupied_heating_setpoint', 5, 35, 0.5).withLocalTemperature().withPiHeatingDemand()
                 .withSystemMode(['heat']).withRunningState(['idle', 'heat'], ea.STATE),
+            exposes.numeric('occupied_heating_scheduled_setpoint', ea.ALL)
+                .withValueMin(5).withValueMax(32).withValueStep(0.5).withUnit('°C')
+                .withDescription('Scheduled change of the setpoint. Alternative method for changing the setpoint that does ' +
+                  'not trigger an aggressive response from the actuator (more suitable for scheduled changes).'),                      
             exposes.numeric('external_measured_room_sensor', ea.ALL)
                 .withDescription('If `radiator_covered` is `true`: Set at maximum 30 minutes interval but not more often than every ' +
                 '5 minutes and 0.1 degrees difference. Resets every 35 minutes to standard. If `radiator_covered` is `false`: ' +
