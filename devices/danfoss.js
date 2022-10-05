@@ -27,7 +27,7 @@ module.exports = [
             tz.thermostat_weekly_schedule, tz.thermostat_clear_weekly_schedule, tz.thermostat_programming_operation_mode,
             tz.danfoss_window_open_feature, tz.danfoss_preheat_status, tz.danfoss_adaptation_status, tz.danfoss_adaptation_settings,
             tz.danfoss_adaptation_control, tz.danfoss_regulation_setpoint_offset,
-            tz.danfoss_thermostat_occupied_heating_scheduled_setpoint],
+            tz.danfoss_thermostat_occupied_heating_setpoint_scheduled],
         exposes: [e.battery(), e.keypad_lockout(), e.programming_operation_mode(),
             exposes.binary('mounted_mode_active', ea.STATE_GET, true, false)
                 .withDescription('Is the unit in mounting mode. This is set to `false` for mounted (already on ' +
@@ -49,10 +49,11 @@ module.exports = [
                 .withDescription('Values observed are `0` (manual), `1` (schedule) or `2` (externally)'),
             exposes.climate().withSetpoint('occupied_heating_setpoint', 5, 35, 0.5).withLocalTemperature().withPiHeatingDemand()
                 .withSystemMode(['heat']).withRunningState(['idle', 'heat'], ea.STATE),
-            exposes.numeric('occupied_heating_scheduled_setpoint', ea.ALL)
-                .withValueMin(5).withValueMax(32).withValueStep(0.5).withUnit('°C')
-                .withDescription('Scheduled change of the setpoint. Alternative method for changing the setpoint that does ' +
-                  'not trigger an aggressive response from the actuator (more suitable for scheduled changes).'),                      
+            exposes.numeric('occupied_heating_setpoint_scheduled', ea.ALL)
+                .withValueMin(5).withValueMax(35).withValueStep(0.5).withUnit('°C')
+                .withDescription('Scheduled change of the setpoint. Alternative method for changing the setpoint. In the opposite ' +
+                  'to occupied_heating_setpoint it does not trigger an aggressive response from the actuator. ' +
+                  '(More suitable for scheduled changes.)'),                      
             exposes.numeric('external_measured_room_sensor', ea.ALL)
                 .withDescription('If `radiator_covered` is `true`: Set at maximum 30 minutes interval but not more often than every ' +
                 '5 minutes and 0.1 degrees difference. Resets every 35 minutes to standard. If `radiator_covered` is `false`: ' +

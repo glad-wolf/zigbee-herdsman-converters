@@ -3560,6 +3560,10 @@ const converters = {
                     result[postfixWithEndpointName('running_state', msg, model, meta)] = 'idle';
                 }
             }
+            if (msg.data.hasOwnProperty('occupiedHeatingSetpoint')) {
+                let value = precisionRound(msg.data['occupiedHeatingSetpoint'], 2) / 100;
+                result[postfixWithEndpointName('occupied_heating_setpoint_scheduled', msg, model, meta)] = value;
+            }
             return result;
         },
     },
